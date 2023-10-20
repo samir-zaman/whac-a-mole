@@ -7,8 +7,10 @@ let result = 0
 let targetPosition
 let currentTime = 60
 
-function randomSquare() {
-    squares.forEach(square => {             //not sure why this foreach function exists
+/* function randomSquare adds and removes mole from a random square. Called on in the 
+moveMole function below, moving the mole at an interval of 500 milliseconds*/
+function randomSquare() {                      
+    squares.forEach(square => {             
         square.classList.remove('mole')
     })
 
@@ -18,23 +20,25 @@ function randomSquare() {
     targetPosition = randomSquare.id
 }
 
+/* adds click functionality and increments score */
 squares.forEach(square => {
-    square.addEventListener('mousedown', () => {
+    square.addEventListener('mousedown', () => { /*'mousedown' instead of 'click' b/c mousedown fires as soon as button is pressed, while click only fires after a full press and release */
         if (square.id == targetPosition) {
             result++
             score.textContent = result
-            targetPosition = null           //not sure why this line exists
+            targetPosition = null /* resets targetPos to null after 1 click so player can't accrue multiple points from clicking on 1 mole multiple times */
         }
     })
 })
 
+/* function moveMole calls on the earlier randomSquare function at an interval of 500 milliseconds */
 function moveMole(){
-    let timerId = null //wondering if I can combine this line with the next
-    timerId = setInterval(randomSquare, 500) 
+    let timerId = setInterval(randomSquare, 500) 
 }
 
 moveMole()
 
+/*countDown function decrements time and issues a pop-up when time's up. This function is called on in a setInterval function in the final line of code */
 function countDown() {
     currentTime--
     timeLeft.textContent = currentTime
